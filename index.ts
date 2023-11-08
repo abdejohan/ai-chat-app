@@ -1,16 +1,48 @@
 import express, { Request, Response, Application } from 'express';
-import dotenv from 'dotenv';
+import OpenAI from 'openai';
+import { ChatCompletionMessageParam } from 'openai/resources';
+import config from './config';
+import { formatResponse, startGame } from './lib/markup';
 
-// For env File
-dotenv.config();
+const messages: ChatCompletionMessageParam[] = [
+  {
+    role: 'user',
+    content: startGame,
+  },
+];
+
+const initializeChat = async () => {
+  const newOpenai = new OpenAI({ apiKey: config.API_KEY });
+  const completion = await newOpenai.chat.completions.create({
+    messages,
+    model: 'gpt-3.5-turbo',
+  });
+  messages.push(completion.choices[0].message);
+};
+
+initializeChat();
 
 const app: Application = express();
-const port = process.env.PORT || 8000;
+app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Express & TypeScript Server');
+app.post('/api', async (req: Request, res: Response) => {
+  try {
+    const { details } = req.body;
+    messages.push({ role: 'user', content: formatResponse(details) });
+    const newOpenai = new OpenAI({ apiKey: config.API_KEY });
+    const completion = await newOpenai.chat.completions.create({
+      messages,
+      model: 'gpt-3.5-turbo',
+    });
+    messages.push(completion.choices[0].message);
+    res.json(completion.choices[0].message);
+  } catch (error) {
+    console.log(error);
+
+    res.status(404).send();
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Server is Fire at http://localhost:${port}`);
+app.listen(config.PORT, () => {
+  console.log(`Server is Fire at http://localhost:${config.PORT}`);
 });
