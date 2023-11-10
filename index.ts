@@ -2,12 +2,12 @@ import express, { Request, Response, Application } from 'express';
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources';
 import config from './config';
-import { formatResponse, startGame } from './lib/markup';
+import { systemMessage } from './lib/markup';
 
 const messages: ChatCompletionMessageParam[] = [
   {
-    role: 'user',
-    content: startGame,
+    role: 'system',
+    content: systemMessage,
   },
 ];
 
@@ -20,15 +20,14 @@ const initializeChat = async () => {
   messages.push(completion.choices[0].message);
 };
 
-initializeChat();
-
 const app: Application = express();
 app.use(express.json());
+initializeChat();
 
 app.post('/api', async (req: Request, res: Response) => {
   try {
-    const { details } = req.body;
-    messages.push({ role: 'user', content: formatResponse(details) });
+    const message = req.body;
+    messages.push(message);
     const newOpenai = new OpenAI({ apiKey: config.API_KEY });
     const completion = await newOpenai.chat.completions.create({
       messages,
