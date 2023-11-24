@@ -23,12 +23,12 @@ const initializeChat = async () => {
 const app: Application = express();
 app.use(express.json());
 initializeChat();
+const newOpenai = new OpenAI({ apiKey: config.API_KEY });
 
 app.post('/api', async (req: Request, res: Response) => {
   try {
     const message = req.body;
     messages.push(message);
-    const newOpenai = new OpenAI({ apiKey: config.API_KEY });
     const completion = await newOpenai.chat.completions.create({
       messages,
       model: 'gpt-3.5-turbo',
