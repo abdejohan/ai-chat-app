@@ -1,4 +1,4 @@
-function App() {
+const Typograpghy = () => {
   return (
     <div className="typography-test-container">
       <h1>h1: Main Heading </h1>
@@ -12,6 +12,6 @@ function App() {
       <a href="#">a: Explore More</a>
     </div>
   );
-}
+};
 
-export default App;
+export default Typograpghy;
