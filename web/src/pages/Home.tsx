@@ -33,7 +33,7 @@ const Home = () => {
           onChange={(event) => setSubject(event.target.value)}
         />
       </div>
-      <button
+      {/* <button
         onClick={() =>
           console.log({
             Lang: language,
@@ -42,8 +42,8 @@ const Home = () => {
         }
       >
         Start Game
-      </button>
-      {/* <Link to="/game">Start Game</Link> */}
+      </button> */}
+      <Link to="/game">Start Game</Link>
     </main>
   );
 };

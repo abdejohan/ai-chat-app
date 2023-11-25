@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
+import Chat from '../components/Chat';
+import { Input } from 'react-chat-elements';
 
 const Game = () => {
   return (
     <main className="page">
-      <h1>Lets chat!</h1>
-      <div>
-        <Link to="/">Start Game</Link>
-      </div>
+      <Chat />
     </main>
   );
 };
