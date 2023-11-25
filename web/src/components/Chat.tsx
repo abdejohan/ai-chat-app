@@ -31,10 +31,13 @@ const chatConversation = [
 
 const ChatBox = () => {
   const [messages, setMessages] = useState(chatConversation);
-  const scroll = useRef();
+  const scroll = useRef<HTMLDivElement>(null);
 
   const saveNewMessage = (newMsg: any) => {
     setMessages([...messages, newMsg]);
+    if (scroll.current) {
+      scroll.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -45,8 +48,8 @@ const ChatBox = () => {
         ))}
       </div>
       {/* when a new message enters the chat, the screen scrolls down to the scroll div */}
-      <span ref={scroll}></span>
-      <SendMessage saveNewMessage={saveNewMessage} scroll={scroll} />
+      <div ref={scroll} style={{ marginBottom: '120px' }} /> {/* offset for the sendmessage  */}
+      <SendMessage saveNewMessage={saveNewMessage} />
     </>
   );
 };

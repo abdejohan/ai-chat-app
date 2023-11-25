@@ -1,15 +1,10 @@
-import { Ref, SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 
 type SendMessageProps = {
-  scroll: any;
   saveNewMessage: (newMsg: any) => void;
-  later?: {
-    role: 'user' | 'assistant';
-    message: string;
-  };
 };
 
-const SendMessage = ({ scroll, saveNewMessage }: SendMessageProps) => {
+const SendMessage = ({ saveNewMessage }: SendMessageProps) => {
   const [message, setMessage] = useState('');
 
   const handleMessageSubmit = (event: SyntheticEvent) => {
@@ -21,7 +16,6 @@ const SendMessage = ({ scroll, saveNewMessage }: SendMessageProps) => {
     // make the api call here
     saveNewMessage({ role: 'user', message: message });
     setMessage('');
-    scroll.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
