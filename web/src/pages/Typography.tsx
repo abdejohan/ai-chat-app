@@ -1,6 +1,6 @@
 const Typograpghy = () => {
   return (
-    <div className="typography-test-container">
+    <main className="page typography-test-container">
       <h1>h1: Main Heading </h1>
       <h2>h2: Section Heading</h2>
       <h3>h3: Subsection Heading</h3>
@@ -10,7 +10,7 @@ const Typograpghy = () => {
       <label>label: Your Information Here</label>
       <p>p: Engaging Content Awaits!</p>
       <a href="#">a: Explore More</a>
-    </div>
+    </main>
   );
 };
 

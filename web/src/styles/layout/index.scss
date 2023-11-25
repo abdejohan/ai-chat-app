@@ -1,0 +1,14 @@
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.page {
+  border: 1px solid green;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+}
