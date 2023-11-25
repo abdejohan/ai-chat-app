@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import Home from './pages/Home.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './styles/index.scss';
-import Typograpghy from './pages/Typography.tsx';
+import Typography from './pages/Typography.tsx';
 import NotFound from './pages/NotFound.tsx';
 import Game from './pages/Game.tsx';
 
@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </nav>
     <Routes>
       <Route path="/" Component={Home} />
-      <Route path="/typography" Component={Typograpghy} />
+      <Route path="/typography" Component={Typography} />
       <Route path="/game" Component={Game} />
       <Route path="/*" Component={NotFound} />
     </Routes>

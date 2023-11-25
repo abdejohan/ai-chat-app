@@ -1,4 +1,4 @@
-const Typograpghy = () => {
+const Typography = () => {
   return (
     <main className="page typography-test-container">
       <h1>h1: Main Heading </h1>
@@ -14,4 +14,4 @@ const Typograpghy = () => {
   );
 };
 
-export default Typograpghy;
+export default Typography;
