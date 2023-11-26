@@ -1,6 +1,7 @@
 import express, { Request, Response, Application } from 'express';
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources';
+import cors from 'cors';
 import config from './config';
 import { systemMessage } from './lib/markup';
 
@@ -22,6 +23,7 @@ const initializeChat = async () => {
 
 const app: Application = express();
 app.use(express.json());
+app.use(cors());
 initializeChat();
 const newOpenai = new OpenAI({ apiKey: config.API_KEY });
 
@@ -36,8 +38,6 @@ app.post('/api', async (req: Request, res: Response) => {
     messages.push(completion.choices[0].message);
     res.json(completion.choices[0].message);
   } catch (error) {
-    console.log(error);
-
     res.status(404).send();
   }
 });
