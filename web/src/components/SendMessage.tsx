@@ -14,7 +14,7 @@ const SendMessage = ({ saveNewMessage }: SendMessageProps) => {
       return;
     }
     // make the api call here
-    saveNewMessage({ role: 'user', message: message });
+    saveNewMessage({ role: 'user', content: message });
     setMessage('');
   };
 
