@@ -42,6 +42,23 @@ app.post('/api', async (req: Request, res: Response) => {
   }
 });
 
+app.post('/api/start', async (req: Request, res: Response) => {
+  console.log('heheheh');
+
+  try {
+    const message = req.body;
+    messages.push(message);
+    const completion = await newOpenai.chat.completions.create({
+      messages,
+      model: 'gpt-3.5-turbo',
+    });
+    messages.push(completion.choices[0].message);
+    res.json(completion.choices[0].message);
+  } catch (error) {
+    res.status(404).send();
+  }
+});
+
 app.listen(config.PORT, () => {
   console.log(`Server is Fire at http://localhost:${config.PORT}`);
 });
