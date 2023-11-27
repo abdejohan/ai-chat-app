@@ -2,10 +2,12 @@ import { RefObject, useRef, useState } from 'react';
 import SendMessage from './SendMessage';
 import ChatBubble from './ChatBubble';
 import { Message } from '../types';
+import { useLocation } from 'react-router-dom';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ChatBox = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { state: startMessage } = useLocation();
+  const [messages, setMessages] = useState<Message[]>([startMessage]);
   const chatRef = useRef<HTMLDivElement>(null);
 
   const getAiResponse = async (message: Message) => {

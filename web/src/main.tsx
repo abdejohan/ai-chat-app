@@ -10,16 +10,18 @@ import { StoreContextProvider } from './contexts/Store.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StoreContextProvider>
     <BrowserRouter>
-      <nav>
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/typography">Typography</a>
-          </li>
-        </ul>
-      </nav>
+      {false && (
+        <nav>
+          <ul>
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/typography">Typography</a>
+            </li>
+          </ul>
+        </nav>
+      )}
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/typography" Component={Typography} />

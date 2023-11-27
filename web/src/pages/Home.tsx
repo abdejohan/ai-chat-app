@@ -1,9 +1,32 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Home = () => {
-  const [language, setLanguage] = useState('Language');
-  const [subject, setSubject] = useState('');
+  const [language, setLanguage] = useState('Spanish');
+  const [subject, setSubject] = useState('sports');
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+
+  const startGame = async () => {
+    try {
+      const response = await fetch(`${API_URL}/start`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          role: 'user',
+          content: `name: ${name}, subject: ${subject}, language: ${language}`,
+        }),
+      });
+      const startResponse = await response.json();
+      return navigate('/game', { state: startResponse });
+    } catch (error) {
+      return null;
+    }
+  };
+
   return (
     <main className="page">
       <h1>Home page</h1>
@@ -13,6 +36,13 @@ const Home = () => {
       </div>
 
       <div style={{ margin: '50px 0px', display: 'flex', flexFlow: 'column nowrap' }}>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
         <label htmlFor="bootcamp">Select language</label>
         <select
           id="bootcamp"
@@ -33,17 +63,7 @@ const Home = () => {
           onChange={(event) => setSubject(event.target.value)}
         />
       </div>
-      {/* <button
-        onClick={() =>
-          console.log({
-            Lang: language,
-            Subject: subject,
-          })
-        }
-      >
-        Start Game
-      </button> */}
-      <Link to="/game">Start Game</Link>
+      <button onClick={() => startGame()}>Start Game</button>
     </main>
   );
 };
