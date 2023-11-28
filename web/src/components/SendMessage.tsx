@@ -29,6 +29,7 @@ const SendMessage = ({ saveNewMessage }: SendMessageProps) => {
         type="text"
         className="form-input__input"
         placeholder="type message..."
+        autoComplete="off"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />

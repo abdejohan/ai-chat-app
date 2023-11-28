@@ -2,11 +2,19 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 const API_URL = import.meta.env.VITE_API_URL;
 
+export const difficultyLevels = {
+  easy: 'Your friend is very new to {language} so keep your respond very short  and easy to understand. Ask very simple basic question that even a child could answer.',
+  intermediate:
+    'Your friend is intermediate level in {language} so keep your respond very short  and easy to understand. Ask very simple basic questions.',
+  expert: 'Your friend is almost fluent in {language}, Try to keep your responses short.',
+};
+
 const Home = () => {
   const [language, setLanguage] = useState('Spanish');
   const [subject, setSubject] = useState('sports');
   const navigate = useNavigate();
   const [name, setName] = useState('');
+  const [difficulty, setDifficulty] = useState(difficultyLevels.easy);
 
   const startGame = async () => {
     try {
@@ -17,7 +25,7 @@ const Home = () => {
         },
         body: JSON.stringify({
           role: 'user',
-          content: `name: ${name}, subject: ${subject}, language: ${language}`,
+          content: `name: ${name}, subject: ${subject}, language: ${language}, difficulty: ${difficulty}`,
         }),
       });
       const startResponse = await response.json();
@@ -38,6 +46,7 @@ const Home = () => {
       <div style={{ margin: '50px 0px', display: 'flex', flexFlow: 'column nowrap' }}>
         <label htmlFor="name">Name</label>
         <input
+          autoComplete="off"
           type="text"
           id="name"
           value={name}
@@ -53,6 +62,18 @@ const Home = () => {
           <option value="">Language</option>
           <option value="swedish">Swedish</option>
           <option value="spanish">Spanish</option>
+        </select>
+
+        <label htmlFor="difficulty">Select difficulty</label>
+        <select
+          id="difficulty"
+          value={difficulty}
+          onChange={(event) => setDifficulty(event.target.value)}
+          className="form__input-select"
+        >
+          <option value={difficultyLevels.easy}>Easy</option>
+          <option value={difficultyLevels.intermediate}>Intermediate</option>
+          <option value={difficultyLevels.expert}>Expert</option>
         </select>
 
         <label htmlFor="subject">Select a subject</label>
