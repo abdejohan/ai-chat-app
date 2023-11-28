@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 
 type ContextType = {
   messages: string[];
@@ -13,10 +13,7 @@ const StoreContext = React.createContext<ContextType>({
 export const StoreContextProvider = ({ children }: { children: ReactNode }) => {
   const [messages, setMessages] = useState<string[]>([]);
 
-  const state = {
-    messages,
-    setMessages,
-  };
+  const state = useMemo(() => ({ messages, setMessages }), [messages, setMessages]);
 
   return <StoreContext.Provider value={state}>{children}</StoreContext.Provider>;
 };
