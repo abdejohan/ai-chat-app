@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources';
 import cors from 'cors';
 import config from './config';
-import { systemMessage } from './lib/markup';
+import systemMessage from './lib/markup';
 
 const messages: ChatCompletionMessageParam[] = [
   {
@@ -43,8 +43,6 @@ app.post('/api', async (req: Request, res: Response) => {
 });
 
 app.post('/api/start', async (req: Request, res: Response) => {
-  console.log('heheheh');
-
   try {
     const message = req.body;
     messages.push(message);
