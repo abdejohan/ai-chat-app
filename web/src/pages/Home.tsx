@@ -1,40 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useAxios from 'axios-hooks';
+import difficultyLevels from '../constants';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const difficultyLevels = {
-  easy: 'Your friend is very new to {language} so keep your respond very short  and easy to understand. Ask very simple basic question that even a child could answer.',
-  intermediate:
-    'Your friend is intermediate level in {language} so keep your respond very short  and easy to understand. Ask very simple basic questions.',
-  expert: 'Your friend is almost fluent in {language}, Try to keep your responses short.',
-};
-
 const Home = () => {
-  const [language, setLanguage] = useState('Spanish');
+  const [language, setLanguage] = useState('');
   const [subject, setSubject] = useState('sports');
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [difficulty, setDifficulty] = useState(difficultyLevels.easy);
+  const [{ data, loading }, startGame] = useAxios(
+    {
+      url: `${API_URL}/start`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        role: 'user',
+        content: `name: ${name}, subject: ${subject}, language: ${language}, difficulty: ${difficulty}`,
+      },
+    },
+    { manual: true },
+  );
 
-  const startGame = async () => {
-    try {
-      const response = await fetch(`${API_URL}/start`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          role: 'user',
-          content: `name: ${name}, subject: ${subject}, language: ${language}, difficulty: ${difficulty}`,
-        }),
-      });
-      const startResponse = await response.json();
-      return navigate('/game', { state: startResponse });
-    } catch (error) {
-      return null;
-    }
-  };
+  useEffect(() => {
+    if (data) navigate('/game', { state: data });
+  }, [data]);
 
   return (
     <main className="page">
@@ -85,7 +79,9 @@ const Home = () => {
           onChange={(event) => setSubject(event.target.value)}
         />
       </div>
-      <button onClick={() => startGame()}>Start Game</button>
+      <button disabled={loading} onClick={() => startGame()}>
+        {loading ? 'Loading..' : 'Start Game'}
+      </button>
     </main>
   );
 };
