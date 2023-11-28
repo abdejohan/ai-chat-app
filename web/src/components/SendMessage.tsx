@@ -1,7 +1,8 @@
 import { SyntheticEvent, useState } from 'react';
+import { Message } from '../types';
 
 type SendMessageProps = {
-  saveNewMessage: (newMsg: any) => void;
+  saveNewMessage: (newMsg: Message) => void;
 };
 
 const SendMessage = ({ saveNewMessage }: SendMessageProps) => {

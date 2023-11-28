@@ -18,8 +18,11 @@
   },
   "plugins": ["react-refresh"],
   "rules": {
-    "react/function-component-definition": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/function-component-definition": 0,
+    "react/react-in-jsx-scope": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "react/button-has-type": 0
+
     //"react-refresh/only-export-components": ["warn", { "allowConstantExport": true }]
   }
 }

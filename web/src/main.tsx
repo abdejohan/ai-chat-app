@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom/client';
-import Home from './pages/Home.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
 import './styles/index.scss';
-import Typography from './pages/Typography.tsx';
-import NotFound from './pages/NotFound.tsx';
-import Game from './pages/Game.tsx';
-import { StoreContextProvider } from './contexts/Store.tsx';
+import Typography from './pages/Typography';
+import NotFound from './pages/NotFound';
+import Game from './pages/Game';
+import { StoreContextProvider } from './contexts/Store';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StoreContextProvider>

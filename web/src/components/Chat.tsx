@@ -1,14 +1,21 @@
 import { RefObject, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import SendMessage from './SendMessage';
 import ChatBubble from './ChatBubble';
 import { Message } from '../types';
-import { useLocation } from 'react-router-dom';
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ChatBox = () => {
   const { state: startMessage } = useLocation();
   const [messages, setMessages] = useState<Message[]>([startMessage]);
   const chatRef = useRef<HTMLDivElement>(null);
+
+  const scrollChatToBottom = (ref: RefObject<HTMLDivElement>) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const getAiResponse = async (message: Message) => {
     try {
@@ -21,15 +28,9 @@ const ChatBox = () => {
       });
       const aiMessage = await response.json();
       setMessages((prevMessages) => [...prevMessages, aiMessage]);
-      scrollChatToBottom(chatRef);
+      return scrollChatToBottom(chatRef);
     } catch (error) {
       return null;
-    }
-  };
-
-  const scrollChatToBottom = (chatRef: RefObject<HTMLDivElement>) => {
-    if (chatRef.current) {
-      chatRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -42,11 +43,11 @@ const ChatBox = () => {
   return (
     <>
       <div className="chat-page">
-        {messages?.map((message, index) => (
-          <ChatBubble key={index} message={message} />
+        {messages?.map((message: Message) => (
+          <ChatBubble key={message.content} message={message} />
         ))}
       </div>
-      <div ref={chatRef} style={{ marginBottom: '120px' }} /> {/* offset for the sendmessage  */}
+      <div ref={chatRef} style={{ marginBottom: '120px' }} />
       <SendMessage saveNewMessage={saveNewMessage} />
     </>
   );
