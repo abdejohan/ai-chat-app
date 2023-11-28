@@ -1,4 +1,4 @@
-import { RefObject, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import SendMessage from './SendMessage';
 import ChatBubble from './ChatBubble';
@@ -12,9 +12,7 @@ const ChatBox = () => {
   const chatRef = useRef<HTMLDivElement>(null);
 
   const scrollChatToBottom = (ref: RefObject<HTMLDivElement>) => {
-    if (ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    ref.current!.scrollIntoView({ behavior: 'smooth', block: 'end' });
   };
 
   const getAiResponse = async (message: Message) => {
@@ -27,27 +25,30 @@ const ChatBox = () => {
         body: JSON.stringify(message),
       });
       const aiMessage = await response.json();
-      setMessages((prevMessages) => [...prevMessages, aiMessage]);
-      return scrollChatToBottom(chatRef);
+      return setMessages((prevMessages) => [...prevMessages, aiMessage]);
     } catch (error) {
       return null;
     }
   };
 
+  useEffect(() => scrollChatToBottom(chatRef), [messages]);
+
   const saveNewMessage = (newMessage: Message) => {
     setMessages([...messages, newMessage]);
-    scrollChatToBottom(chatRef);
     getAiResponse(newMessage);
   };
 
   return (
     <>
-      <div className="chat-page">
-        {messages?.map((message: Message) => (
-          <ChatBubble key={message.content} message={message} />
-        ))}
+      <div className="scroll-container">
+        <div className="conversation">
+          {messages?.map((message: Message, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <ChatBubble key={index} message={message} />
+          ))}
+          <div ref={chatRef} />
+        </div>
       </div>
-      <div ref={chatRef} style={{ marginBottom: '120px' }} />
       <SendMessage saveNewMessage={saveNewMessage} />
     </>
   );

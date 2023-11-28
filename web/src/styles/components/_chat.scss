@@ -1,9 +1,19 @@
-/* chat component */
 .chat-page {
   display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100vh;
 }
+
+.scroll-container {
+  overflow: scroll;
+}
+
+.conversation {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
 .chat-page__bubble {
   display: flex;
   flex-flow: column nowrap;
@@ -16,12 +26,14 @@
   //box-shadow: -1px 1px 1px 1px #4c768d;
   max-width: calc(100% - 40px);
 }
+
 .chat-page__bubble--right {
   align-self: flex-end;
   background-color: #fff;
   //box-shadow: -1px 1px 1px 1px #88dded;
   border: 1px solid #88dded;
 }
+
 .chat-page__bubble-role {
   font-weight: bold;
   margin-bottom: 5px;
@@ -40,9 +52,6 @@
 
 /* send message */
 .send-message {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
   width: 100%;
   padding: 15px;
   background-color: #4c768d;
@@ -63,13 +72,16 @@
   color: #1c2c4c;
   font-size: 1rem;
 }
+
 .send-message > input:placeholder {
   color: #ddd;
 }
+
 .send-message > :is(input, button):focus {
   outline: none;
   border-bottom: 1px solid #7cc5d9;
 }
+
 .send-message > button {
   width: 70px;
   height: 40px;

@@ -1,7 +1,7 @@
 import Chat from '../components/Chat';
 
 const Game = () => (
-  <main className="page">
+  <main className="chat-page">
     <Chat />
   </main>
 );
