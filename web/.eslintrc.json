@@ -1,14 +1,7 @@
 {
   "root": true,
   "env": { "browser": true, "es2024": true },
-  "extends": [
-    "airbnb",
-    "airbnb/hooks",
-    "airbnb-typescript",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended"
-  ],
+  "extends": ["airbnb", "airbnb/hooks", "airbnb-typescript"],
   "ignorePatterns": ["dist"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -16,14 +9,15 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react-refresh"],
+  "plugins": ["react-refresh", "unicorn"],
   "rules": {
     "react/function-component-definition": 0,
     "react/react-in-jsx-scope": 0,
     "jsx-a11y/label-has-associated-control": 0,
     "react/button-has-type": 0,
-    "object-curly-newline": 0
-
+    "object-curly-newline": 0,
+    "react-hooks/exhaustive-deps": 0,
+    "jsx-a11y/anchor-is-valid": 0
     //"react-refresh/only-export-components": ["warn", { "allowConstantExport": true }]
   }
 }
